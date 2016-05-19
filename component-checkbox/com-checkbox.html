@@ -1,0 +1,102 @@
+<template id="CheckBox">
+    <style>
+    .slide-checkbox {
+        position: relative;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 30px;
+        background: #4fbe79;
+    }
+    
+    .slide-checkbox input[type=checkbox] {
+        visibility: hidden;
+    }
+    
+    .slide-checkbox label {
+        position: absolute;
+        height: 30px;
+        width: 30px;
+        left: 5px;
+        top: 5px;
+        background: #FFFFFF;
+        border-radius: 50% 50%;
+        -webkit-transition: all .4s ease;
+        -moz-transition: all .4s ease;
+        -o-transition: all .4s ease;
+        -ms-transition: all .4s ease;
+        transition: all .4s ease;
+    }
+    
+    .slide-checkbox input[type=checkbox]:checked + label {
+        left: 85px;
+    }
+    </style>
+    <div class="slide-checkbox">
+        <input type="checkbox" name="checkbox" id="SlideCheck" />
+        <label for="SlideCheck"></label>
+    </div>
+</template>
+<script type="text/javascript">
+// Whether registerElement is supported
+function isCustomElementSupported() {
+    return 'registerElement' in document;
+}
+
+(function() {
+    "use strict";
+    if (isCustomElementSupported()) {
+        var objectPrototype = Object.create(HTMLElement.prototype);
+        var selfDoc = document.currentScript.ownerDocument;
+
+        Object.defineProperty(objectPrototype, 'value', {
+            get: function() {
+                return this.getAttribute("value") || null;
+            },
+            set: function(value) {
+                this.setAttribute("value", value);
+            }
+        });
+
+        Object.defineProperty(objectPrototype, 'checked', {
+            get: function() {
+                return this.getAttribute("checked") || false;
+            },
+            set: function(isChecked) {
+                shadowChecked(this, isChecked);
+                this.setAttribute("checked", isChecked);
+            }
+        });
+
+        objectPrototype.createdCallback = function() {
+            var self = this;
+            var rootElement = self.createShadowRoot();
+            var templateContent = selfDoc.querySelector("#CheckBox").content;
+            var nodes = document.importNode(templateContent, true);
+
+            rootElement.appendChild(nodes);
+
+            var checkbox = rootElement.querySelector("#SlideCheck");
+            
+            if (self.checked == "true") {
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener('change', function() {
+                self.checked = this.checked;
+            });
+        };
+
+        var myCheckbox = document.registerElement('check-box', {
+            prototype: objectPrototype
+        });
+
+    }
+
+    // update shadow root 
+    function shadowChecked(self, isChecked) {
+        var shadowCheck = self.shadowRoot.querySelector("#SlideCheck");
+        shadowCheck.checked = isChecked;
+    }
+})();
+</script>

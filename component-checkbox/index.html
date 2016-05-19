@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Checkbox Demo index</title>
+    <link rel="import" href="com-checkbox.html">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <style type="text/css">
+    .line {
+        width: 80%;
+        height: 100px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Checkbox Component Demo</h1>
+    <form id="form1">
+        <div class="line">
+            <label>checkbox1
+            </label>
+            <check-box class="mycheck" checked="true" value="1" id="ComCheckbox"></check-box>
+        </div>
+        <div class="line">
+            <label>checkbox2
+            </label>
+            <check-box class="mycheck" checked="false" value="2" id="ComCheckbox1" value="2"></check-box>
+        </div>
+        <div class="line">
+            <label>checkbox3
+            </label>
+            <check-box class="mycheck" value="3" checked=false id="ComCheckbox2" value="3"></check-box>
+        </div>
+        <div class="line">
+            <label>checkbox4
+            </label>
+            <check-box class="mycheck" value="4" checked="true" id="ComCheckbox3" value="4"></check-box>
+        </div>
+        <button type="button" onclick="selectAll()">SelectAll</button>
+        <button type="button" onclick="cancleSelectAll()">CancleSelectAll</button>
+    </form>
+    <h1>Checkbox2</h1>
+    <script type="text/javascript">
+        var checkbox = document.querySelector("#ComCheckbox");
+        console.log(checkbox.checked);
+        console.log(checkbox.value);
+        console.log(checkbox.getAttribute('value'));
+        checkbox.value = 3;
+        console.log("after set the value of checkbox:");
+        console.log(checkbox.getAttribute('value'));
+
+        var checkboxs = document.querySelectorAll("com-checkbox");
+
+        function selectAll() {
+            for (i = 0; i < checkboxs.length; i++) {
+                console.log(checkboxs[i]);
+                checkboxs[i].checked = true;
+            }
+        }
+
+        function cancleSelectAll() {
+            for (i = 0; i < checkboxs.length; i++) {
+                console.log(checkboxs[i]);
+                checkboxs[i].checked = false;
+            }
+        }
+    </script>
+</body>
+
+</html>
